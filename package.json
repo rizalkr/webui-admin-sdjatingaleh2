@@ -1,0 +1,11 @@
+{
+  "name": "dashboard-admin-sdjatingaleh2",
+  "version": "1.0.0",
+  "description": "Web UI Admin SD Jatingaleh 2",
+  "main": "js/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rizal Kurnia",
+  "license": "ISC"
+}

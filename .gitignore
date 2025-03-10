@@ -1,0 +1,30 @@
+# Node modules
+node_modules/
+
+# Log files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Directory for instrumented libs
+coverage/
+
+# Build output
+dist/
+build/
+
+# Optional npm cache directory
+.npm/
+
+# Dependency directories
+jspm_packages/
+
+# Environment variables
+.env*

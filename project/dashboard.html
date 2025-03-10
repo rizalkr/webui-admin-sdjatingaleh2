@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            position: relative;
+        }
+        .modal-content h3 {
+            margin-top: 0;
+        }
+        .close {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Dashboard Admin</h1>
+        <button id="logoutBtn">Logout</button>
+    </header>
+
+    <main>
+        <!-- Section: Teacher -->
+        <section id="teacherSection">
+            <h2>Teachers</h2>
+            <div id="teacherList">
+                <!-- Data teachers akan di-render di sini -->
+            </div>
+            <!-- Form Create Teacher -->
+            <div>
+                <h3>Create Teacher</h3>
+                <input type="text" id="createTeacherName" placeholder="Name" />
+                <input type="text" id="createTeacherUsername" placeholder="Username" />
+                <input type="email" id="createTeacherEmail" placeholder="Email" />
+                <input type="text" id="createTeacherSubject" placeholder="Subject" />
+                <button id="createTeacherBtn">Create Teacher</button>
+            </div>
+        </section>
+
+        <!-- Section: Student -->
+        <section id="studentSection">
+            <h2>Students</h2>
+            <div id="studentList">
+                <!-- Data siswa akan di-render di sini -->
+            </div>
+            <!-- Form Create Student -->
+            <div>
+                <h3>Create Student</h3>
+                <input type="text" id="createStudentName" placeholder="Name" />
+                <input type="number" id="createStudentAge" placeholder="Age" />
+                <input type="text" id="createStudentClass" placeholder="Class" />
+                <button id="createStudentBtn">Create Student</button>
+            </div>
+        </section>
+
+        <!-- Section: News -->
+        <section id="newsSection">
+            <h2>News</h2>
+            <div id="newsList">
+                <!-- Data news akan di-render di sini -->
+            </div>
+            <!-- Form Create News -->
+            <div>
+                <h3>Create News</h3>
+                <input type="text" id="createNewsTitle" placeholder="Title" />
+                <textarea id="createNewsContent" placeholder="Content"></textarea>
+                <button id="createNewsBtn">Create News</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Update Teacher -->
+    <div id="updateTeacherModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeUpdateTeacherModal()">&times;</span>
+            <h3>Update Teacher</h3>
+            <input type="hidden" id="teacherId" />
+            <input type="text" id="teacherName" placeholder="Name" />
+            <input type="text" id="teacherUsername" placeholder="Username" />
+            <input type="email" id="teacherEmail" placeholder="Email" />
+            <input type="text" id="teacherSubject" placeholder="Subject" />
+            <button id="updateTeacherBtn">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- Modal Update Student -->
+    <div id="updateStudentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeUpdateStudentModal()">&times;</span>
+            <h3>Update Student</h3>
+            <input type="hidden" id="studentId" />
+            <input type="text" id="studentName" placeholder="Name" />
+            <input type="number" id="studentAge" placeholder="Age" />
+            <input type="text" id="studentClass" placeholder="Class" />
+            <button id="updateStudentBtn">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- Modal Update News -->
+    <div id="updateNewsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeUpdateNewsModal()">&times;</span>
+            <h3>Update News</h3>
+            <input type="hidden" id="newsId" />
+            <input type="text" id="newsTitle" placeholder="Title" />
+            <textarea id="newsContent" placeholder="Content"></textarea>
+            <button id="updateNewsBtn">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- Include scripts -->
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/service/teacher.js"></script>
+    <script src="../js/service/student.js"></script>
+    <script src="../js/service/news.js"></script>
+    <script>
+        // Contoh fungsi untuk membuka dan menutup modal update
+        function openUpdateTeacherModal(teacher) {
+            document.getElementById('teacherId').value = teacher.id;
+            document.getElementById('teacherName').value = teacher.name;
+            document.getElementById('teacherUsername').value = teacher.username;
+            document.getElementById('teacherEmail').value = teacher.email;
+            document.getElementById('teacherSubject').value = teacher.subject;
+            document.getElementById('updateTeacherModal').style.display = 'block';
+        }
+        
+        function closeUpdateTeacherModal() {
+            document.getElementById('updateTeacherModal').style.display = 'none';
+        }
+        
+        function openUpdateStudentModal(student) {
+            document.getElementById('studentId').value = student.id;
+            document.getElementById('studentName').value = student.name;
+            document.getElementById('studentAge').value = student.age;
+            document.getElementById('studentClass').value = student.class;
+            document.getElementById('updateStudentModal').style.display = 'block';
+        }
+        
+        function closeUpdateStudentModal() {
+            document.getElementById('updateStudentModal').style.display = 'none';
+        }
+        
+        function openUpdateNewsModal(news) {
+            document.getElementById('newsId').value = news.id;
+            document.getElementById('newsTitle').value = news.title;
+            document.getElementById('newsContent').value = news.content;
+            document.getElementById('updateNewsModal').style.display = 'block';
+        }
+        
+        function closeUpdateNewsModal() {
+            document.getElementById('updateNewsModal').style.display = 'none';
+        }
+        
+        // Contoh pemanggilan fungsi modal pada tombol Edit di service (misalnya, updateTeacher)
+        // Di file service/teacher.js, Anda dapat memanggil openUpdateTeacherModal(teacher)
+        // Setelah klik tombol edit, pastikan untuk menampilkan modal dengan data yang sudah ada.
+
+        // Untuk delete, kita masih gunakan konfirmasi standar seperti: if(confirm("Are you sure…"))
+    </script>
+</body>
+</html>

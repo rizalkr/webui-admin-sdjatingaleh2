@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Dashboard Admin</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login Admin</h2>
+        <form id="loginForm">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required />
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required />
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <div id="errorMessage" style="color:red;"></div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            auth.loginUser(username, password)
+                .then(token => {
+                    // Jika login berhasil, arahkan ke dashboard
+                    window.location.href = "dashboard.html";
+                })
+                .catch(error => {
+                    console.error("Login error:", error);
+                    document.getElementById('errorMessage').textContent = "Login gagal: periksa kredensial Anda.";
+                });
+        });
+    </script>
+</body>
+</html>

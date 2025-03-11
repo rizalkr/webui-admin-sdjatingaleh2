@@ -8,17 +8,18 @@ async function loadTeachers() {
 }
 
 function renderTeachers(teachers) {
-    const teacherSection = document.getElementById('teacherSection');
-    if (!teacherSection) return;
-    teacherSection.innerHTML = "";
+    // Gunakan elemen container khusus untuk daftar teacher
+    const teacherList = document.getElementById('teacherList');
+    if (!teacherList) return;
+    teacherList.innerHTML = "";
     teachers.forEach(teacher => {
         const div = document.createElement('div');
         div.innerHTML = `
-            <p>${teacher.name} (${teacher.email})</p>
+            <p>Nama : ${teacher.name} | Email : (${teacher.email}) | Mengajar : ${teacher.subject}</p>
             <button onclick="showUpdateTeacherForm(${teacher.id}, '${teacher.name}', '${teacher.username}', '${teacher.email}', '${teacher.subject}')">Edit</button>
             <button onclick="deleteTeacher(${teacher.id})">Delete</button>
         `;
-        teacherSection.appendChild(div);
+        teacherList.appendChild(div);
     });
 }
 
@@ -59,15 +60,14 @@ async function deleteTeacher(id) {
     }
 }
 
-// Fungsi untuk menampilkan form update teacher (bisa dimodifikasi sesuai UI)
 function showUpdateTeacherForm(id, name, username, email, subject) {
-    // Contoh: Isi form input dengan data teacher
     document.getElementById('teacherId').value = id;
     document.getElementById('teacherName').value = name;
     document.getElementById('teacherUsername').value = username;
     document.getElementById('teacherEmail').value = email;
     document.getElementById('teacherSubject').value = subject;
-    // Asumsikan ada tombol untuk submit update teacher, yang terhubung ke fungsi berikut:
+    // Tampilkan modal update
+    document.getElementById('updateTeacherModal').style.display = 'block';
     const updateTeacherBtn = document.getElementById('updateTeacherBtn');
     if (updateTeacherBtn) {
         updateTeacherBtn.onclick = () => {
@@ -78,6 +78,21 @@ function showUpdateTeacherForm(id, name, username, email, subject) {
                 subject: document.getElementById('teacherSubject').value
             };
             updateTeacher(id, teacherData);
+            closeUpdateTeacherModal();
         };
     }
+}
+
+function closeUpdateTeacherModal() {
+    document.getElementById('updateTeacherModal').style.display = 'none';
+}
+
+window.closeUpdateTeacherModal = closeUpdateTeacherModal;
+
+window.teacher = {
+    loadTeachers,
+    createTeacher,
+    updateTeacher,
+    deleteTeacher,
+    showUpdateTeacherForm
 }

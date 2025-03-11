@@ -1,40 +1,66 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    const token = auth.getToken();
-    if (!token) {
-        window.location.href = "login.html"; // Pastikan pathnya sesuai
+document.addEventListener('DOMContentLoaded', init);
+
+async function init() {
+    if (!auth.getToken()) {
+        redirectToLogin();
         return;
     }
 
-    // Load data awal
+    try {
+        loadInitialData();
+        setupEventListeners();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function redirectToLogin() {
+    window.location.href = "login.html";
+}
+
+function loadInitialData() {
     loadTeachers();
     loadStudents();
     loadNews();
+}
 
-    // Setup event untuk logout (misal, elemen dengan id="logoutBtn" ada di dashboard.html)
+function setupEventListeners() {
     const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            auth.logout();
-            window.location.href = "login.html";
-        });
-    }
-    
-    // Contoh: Event handler untuk "Create Teacher"
+    logoutBtn?.addEventListener('click', () => {
+        auth.logout();
+        redirectToLogin();
+    });
+
     const createTeacherBtn = document.getElementById('createTeacherBtn');
-    if (createTeacherBtn) {
-        createTeacherBtn.addEventListener('click', () => {
-            const teacherData = {
-                name: document.getElementById('teacherName').value,
-                username: document.getElementById('teacherUsername').value,
-                email: document.getElementById('teacherEmail').value,
-                subject: document.getElementById('teacherSubject').value
-            };
-            createTeacher(teacherData);
-        });
-    }
-    
-    // Event handler serupa bisa dibuat untuk Student dan News, atau menggunakan event delegation.
-});
+    createTeacherBtn?.addEventListener('click', () => {
+        const teacherData = {
+            name: document.getElementById('createTeacherName')?.value,
+            username: document.getElementById('createTeacherUsername')?.value,
+            email: document.getElementById('createTeacherEmail')?.value,
+            subject: document.getElementById('createTeacherSubject')?.value
+        };
+        createTeacher(teacherData);
+    });
+
+    const createStudentBtn = document.getElementById('createStudentBtn');
+    createStudentBtn?.addEventListener('click', () => {
+        const studentData = {
+            name: document.getElementById('createStudentName')?.value,
+            age: Number(document.getElementById('createStudentAge')?.value),
+            class: document.getElementById('createStudentClass')?.value
+        };
+        student.createStudent(studentData);
+    });
+
+    const createNewsBtn = document.getElementById('createNewsBtn');
+    createNewsBtn?.addEventListener('click', () => {
+        const newsData = {
+            title: document.getElementById('createNewsTitle')?.value,
+            content: document.getElementById('createNewsContent')?.value
+        };
+        news.createNews(newsData);
+    });
+}
 
 // Helper: Tambahkan header Authorization
 function getAuthHeaders() {
@@ -51,10 +77,7 @@ const API_BASE_URL = 'http://localhost:3000';
 async function apiFetch(endpoint, options = {}) {
     const response = await fetch(API_BASE_URL + endpoint, {
         ...options,
-        headers: {
-            ...getAuthHeaders(),
-            ...(options.headers || {})
-        }
+        headers: { ...getAuthHeaders(), ...(options.headers || {}) }
     });
     if (!response.ok) {
         const errorText = await response.text();

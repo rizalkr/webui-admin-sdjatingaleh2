@@ -8,16 +8,16 @@ async function loadNews() {
 }
 
 function renderNews(newsList) {
-    const newsSection = document.getElementById('newsSection');
+    const newsSection = document.getElementById('newsList');
     if (!newsSection) return;
     newsSection.innerHTML = "";
-    newsList.forEach(news => {
+    newsList.forEach(newsItem => {
         const div = document.createElement('div');
         div.innerHTML = `
-            <h4>${news.title}</h4>
-            <p>${news.content}</p>
-            <button onclick="showUpdateNewsForm(${news.id}, '${news.title}', '${news.content}')">Edit</button>
-            <button onclick="deleteNews(${news.id})">Delete</button>
+            <h4>${newsItem.title}</h4>
+            <p>${newsItem.content}</p>
+            <button onclick="showUpdateNewsForm(${newsItem.id}, '${newsItem.title}', '${newsItem.content}')">Edit</button>
+            <button onclick="deleteNews(${newsItem.id})">Delete</button>
         `;
         newsSection.appendChild(div);
     });
@@ -60,11 +60,12 @@ async function deleteNews(id) {
     }
 }
 
-// Fungsi untuk menampilkan form update news
 function showUpdateNewsForm(id, title, content) {
     document.getElementById('newsId').value = id;
     document.getElementById('newsTitle').value = title;
     document.getElementById('newsContent').value = content;
+    // Tampilkan modal update
+    document.getElementById('updateNewsModal').style.display = 'block';
     const updateNewsBtn = document.getElementById('updateNewsBtn');
     if (updateNewsBtn) {
         updateNewsBtn.onclick = () => {
@@ -73,6 +74,21 @@ function showUpdateNewsForm(id, title, content) {
                 content: document.getElementById('newsContent').value
             };
             updateNews(id, newsData);
+            closeUpdateNewsModal();
         };
     }
 }
+
+function closeUpdateNewsModal() {
+    document.getElementById('updateNewsModal').style.display = 'none';
+}
+
+window.closeUpdateNewsModal = closeUpdateNewsModal;
+// Expose fungsi agar bisa dipanggil dari file lain
+window.news = {
+    loadNews,
+    createNews,
+    updateNews,
+    deleteNews,
+    showUpdateNewsForm
+};

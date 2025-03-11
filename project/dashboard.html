@@ -7,37 +7,15 @@
     <link rel="stylesheet" href="../css/main.css">
     <style>
         /* Modal styling */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 10;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-            position: relative;
-        }
-        .modal-content h3 {
-            margin-top: 0;
-        }
-        .close {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            cursor: pointer;
-            font-size: 24px;
-            font-weight: bold;
-        }
+        .modal { display: none; position: fixed; z-index: 10; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4); }
+        .modal-content { background-color: #fefefe; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; position: relative; }
+        .modal-content h3 { margin-top: 0; }
+        .close { position: absolute; right: 10px; top: 10px; cursor: pointer; font-size: 24px; font-weight: bold; }
+        /* Menu styling */
+        .menu { margin-bottom: 20px; }
+        .menu button { margin-right: 10px; padding: 10px 15px; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
     </style>
 </head>
 <body>
@@ -46,9 +24,16 @@
         <button id="logoutBtn">Logout</button>
     </header>
 
+    <!-- Menu Tab -->
+    <nav class="menu">
+        <button id="teacherMenu">Teacher</button>
+        <button id="studentMenu">Student</button>
+        <button id="newsMenu">News</button>
+    </nav>
+
     <main>
         <!-- Section: Teacher -->
-        <section id="teacherSection">
+        <section id="teacherSection" class="content-section active">
             <h2>Teachers</h2>
             <div id="teacherList">
                 <!-- Data teachers akan di-render di sini -->
@@ -65,10 +50,10 @@
         </section>
 
         <!-- Section: Student -->
-        <section id="studentSection">
+        <section id="studentSection" class="content-section">
             <h2>Students</h2>
             <div id="studentList">
-                <!-- Data siswa akan di-render di sini -->
+                <!-- Data students akan di-render di sini -->
             </div>
             <!-- Form Create Student -->
             <div>
@@ -79,9 +64,9 @@
                 <button id="createStudentBtn">Create Student</button>
             </div>
         </section>
-
+        
         <!-- Section: News -->
-        <section id="newsSection">
+        <section id="newsSection" class="content-section">
             <h2>News</h2>
             <div id="newsList">
                 <!-- Data news akan di-render di sini -->
@@ -94,46 +79,46 @@
                 <button id="createNewsBtn">Create News</button>
             </div>
         </section>
+        
+        <!-- Modal Update Teacher -->
+        <div id="updateTeacherModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeUpdateTeacherModal()">&times;</span>
+                <h3>Update Teacher</h3>
+                <input type="hidden" id="teacherId" />
+                <input type="text" id="teacherName" placeholder="Name" />
+                <input type="text" id="teacherUsername" placeholder="Username" />
+                <input type="email" id="teacherEmail" placeholder="Email" />
+                <input type="text" id="teacherSubject" placeholder="Subject" />
+                <button id="updateTeacherBtn">Save Changes</button>
+            </div>
+        </div>
+
+        <!-- Modal Update Student -->
+        <div id="updateStudentModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeUpdateStudentModal()">&times;</span>
+                <h3>Update Student</h3>
+                <input type="hidden" id="studentId" />
+                <input type="text" id="studentName" placeholder="Name" />
+                <input type="number" id="studentAge" placeholder="Age" />
+                <input type="text" id="studentClass" placeholder="Class" />
+                <button id="updateStudentBtn">Save Changes</button>
+            </div>
+        </div>
+
+        <!-- Modal Update News -->
+        <div id="updateNewsModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeUpdateNewsModal()">&times;</span>
+                <h3>Update News</h3>
+                <input type="hidden" id="newsId" />
+                <input type="text" id="newsTitle" placeholder="Title" />
+                <textarea id="newsContent" placeholder="Content"></textarea>
+                <button id="updateNewsBtn">Save Changes</button>
+            </div>
+        </div>
     </main>
-
-    <!-- Modal Update Teacher -->
-    <div id="updateTeacherModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeUpdateTeacherModal()">&times;</span>
-            <h3>Update Teacher</h3>
-            <input type="hidden" id="teacherId" />
-            <input type="text" id="teacherName" placeholder="Name" />
-            <input type="text" id="teacherUsername" placeholder="Username" />
-            <input type="email" id="teacherEmail" placeholder="Email" />
-            <input type="text" id="teacherSubject" placeholder="Subject" />
-            <button id="updateTeacherBtn">Save Changes</button>
-        </div>
-    </div>
-
-    <!-- Modal Update Student -->
-    <div id="updateStudentModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeUpdateStudentModal()">&times;</span>
-            <h3>Update Student</h3>
-            <input type="hidden" id="studentId" />
-            <input type="text" id="studentName" placeholder="Name" />
-            <input type="number" id="studentAge" placeholder="Age" />
-            <input type="text" id="studentClass" placeholder="Class" />
-            <button id="updateStudentBtn">Save Changes</button>
-        </div>
-    </div>
-
-    <!-- Modal Update News -->
-    <div id="updateNewsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeUpdateNewsModal()">&times;</span>
-            <h3>Update News</h3>
-            <input type="hidden" id="newsId" />
-            <input type="text" id="newsTitle" placeholder="Title" />
-            <textarea id="newsContent" placeholder="Content"></textarea>
-            <button id="updateNewsBtn">Save Changes</button>
-        </div>
-    </div>
 
     <!-- Include scripts -->
     <script src="../js/auth.js"></script>
@@ -142,48 +127,32 @@
     <script src="../js/service/student.js"></script>
     <script src="../js/service/news.js"></script>
     <script>
-        // Contoh fungsi untuk membuka dan menutup modal update
-        function openUpdateTeacherModal(teacher) {
-            document.getElementById('teacherId').value = teacher.id;
-            document.getElementById('teacherName').value = teacher.name;
-            document.getElementById('teacherUsername').value = teacher.username;
-            document.getElementById('teacherEmail').value = teacher.email;
-            document.getElementById('teacherSubject').value = teacher.subject;
-            document.getElementById('updateTeacherModal').style.display = 'block';
-        }
-        
-        function closeUpdateTeacherModal() {
-            document.getElementById('updateTeacherModal').style.display = 'none';
-        }
-        
-        function openUpdateStudentModal(student) {
-            document.getElementById('studentId').value = student.id;
-            document.getElementById('studentName').value = student.name;
-            document.getElementById('studentAge').value = student.age;
-            document.getElementById('studentClass').value = student.class;
-            document.getElementById('updateStudentModal').style.display = 'block';
-        }
-        
-        function closeUpdateStudentModal() {
-            document.getElementById('updateStudentModal').style.display = 'none';
-        }
-        
-        function openUpdateNewsModal(news) {
-            document.getElementById('newsId').value = news.id;
-            document.getElementById('newsTitle').value = news.title;
-            document.getElementById('newsContent').value = news.content;
-            document.getElementById('updateNewsModal').style.display = 'block';
-        }
-        
-        function closeUpdateNewsModal() {
-            document.getElementById('updateNewsModal').style.display = 'none';
-        }
-        
-        // Contoh pemanggilan fungsi modal pada tombol Edit di service (misalnya, updateTeacher)
-        // Di file service/teacher.js, Anda dapat memanggil openUpdateTeacherModal(teacher)
-        // Setelah klik tombol edit, pastikan untuk menampilkan modal dengan data yang sudah ada.
+        // Menu tab functionality
+        const teacherMenu = document.getElementById('teacherMenu');
+        const studentMenu = document.getElementById('studentMenu');
+        const newsMenu = document.getElementById('newsMenu');
 
-        // Untuk delete, kita masih gunakan konfirmasi standar seperti: if(confirm("Are you sure…"))
+        const teacherSection = document.getElementById('teacherSection');
+        const studentSection = document.getElementById('studentSection');
+        const newsSection = document.getElementById('newsSection');
+
+        teacherMenu.addEventListener('click', () => {
+            teacherSection.classList.add('active');
+            studentSection.classList.remove('active');
+            newsSection.classList.remove('active');
+        });
+
+        studentMenu.addEventListener('click', () => {
+            studentSection.classList.add('active');
+            teacherSection.classList.remove('active');
+            newsSection.classList.remove('active');
+        });
+
+        newsMenu.addEventListener('click', () => {
+            newsSection.classList.add('active');
+            teacherSection.classList.remove('active');
+            studentSection.classList.remove('active');
+        });
     </script>
 </body>
 </html>

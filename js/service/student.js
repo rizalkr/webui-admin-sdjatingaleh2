@@ -8,17 +8,17 @@ async function loadStudents() {
 }
 
 function renderStudents(students) {
-    const studentSection = document.getElementById('studentSection');
-    if (!studentSection) return;
-    studentSection.innerHTML = "";
+    const studentList = document.getElementById('studentList');
+    if (!studentList) return;
+    studentList.innerHTML = "";
     students.forEach(student => {
         const div = document.createElement('div');
         div.innerHTML = `
-            <p>${student.name} - Class: ${student.class}</p>
+            <p>${student.name} - Age: ${student.age}, Class: ${student.class}</p>
             <button onclick="showUpdateStudentForm(${student.id}, '${student.name}', ${student.age}, '${student.class}')">Edit</button>
             <button onclick="deleteStudent(${student.id})">Delete</button>
         `;
-        studentSection.appendChild(div);
+        studentList.appendChild(div);
     });
 }
 
@@ -59,12 +59,13 @@ async function deleteStudent(id) {
     }
 }
 
-// Fungsi untuk menampilkan form update student
 function showUpdateStudentForm(id, name, age, studentClass) {
     document.getElementById('studentId').value = id;
     document.getElementById('studentName').value = name;
     document.getElementById('studentAge').value = age;
     document.getElementById('studentClass').value = studentClass;
+    // Tampilkan modal update
+    document.getElementById('updateStudentModal').style.display = 'block';
     const updateStudentBtn = document.getElementById('updateStudentBtn');
     if (updateStudentBtn) {
         updateStudentBtn.onclick = () => {
@@ -74,6 +75,22 @@ function showUpdateStudentForm(id, name, age, studentClass) {
                 class: document.getElementById('studentClass').value
             };
             updateStudent(id, studentData);
+            closeUpdateStudentModal();
         };
     }
 }
+
+function closeUpdateStudentModal() {
+    document.getElementById('updateStudentModal').style.display = 'none';
+}
+
+window.closeUpdateStudentModal = closeUpdateStudentModal;
+
+// Expose fungsi agar bisa dipanggil dari file lain
+window.student = {
+    loadStudents,
+    createStudent,
+    updateStudent,
+    deleteStudent,
+    showUpdateStudentForm
+};

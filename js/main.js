@@ -38,15 +38,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Helper: Tambahkan header Authorization
 function getAuthHeaders() {
+    const token = auth.getToken();
     return {
         'Content-Type': 'application/json',
-        'Authorization': auth.getToken()
+        'Authorization': token ? `Bearer ${token}` : ''
     };
 }
 
-// Helper: Fungsi fetch wrapper
+const API_BASE_URL = 'http://localhost:3000';
+
+// Helper: Fungsi fetch wrapper dengan base URL
 async function apiFetch(endpoint, options = {}) {
-    const response = await fetch(endpoint, {
+    const response = await fetch(API_BASE_URL + endpoint, {
         ...options,
         headers: {
             ...getAuthHeaders(),

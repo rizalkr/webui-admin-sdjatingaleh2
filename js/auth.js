@@ -1,18 +1,19 @@
-// Fungsi untuk melakukan login dan menyimpan token di localStorage
 function loginUser(username, password) {
-    return fetch('/api/login', {
+    return fetch('http://localhost:3000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
     })
-    .then(response => {
+    .then(async response => {
+        console.log('Response status:', response.status);
+        const responseBody = await response.text();
+        console.log('Response body:', responseBody);
         if (!response.ok) {
             throw new Error('Login failed');
         }
-        return response.json();
+        return JSON.parse(responseBody);
     })
     .then(data => {
-        // Misalnya, API mengembalikan format { token: 'Bearer ...' }
         setToken(data.token);
         return data.token;
     })
@@ -21,7 +22,6 @@ function loginUser(username, password) {
         throw error;
     });
 }
-
 // Simpan token ke localStorage
 function setToken(token) {
     localStorage.setItem('authToken', token);

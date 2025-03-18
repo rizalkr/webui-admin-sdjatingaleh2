@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin</title>
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
     <style>
         /* Modal styling */
         .modal { display: none; position: fixed; z-index: 10; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4); }
@@ -37,6 +38,21 @@
             <h2>Teachers</h2>
             <div id="teacherList">
                 <!-- Data teachers akan di-render di sini -->
+                  <!-- Table to display teacher data -->
+        <table id="teacherTable" border="1" cellspacing="0" cellpadding="8" style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Teacher rows will be rendered here dynamically -->
+            </tbody>
+        </table>
             </div>
             <!-- Form Create Teacher -->
             <div>
@@ -54,6 +70,20 @@
             <h2>Students</h2>
             <div id="studentList">
                 <!-- Data students akan di-render di sini -->
+                  <!-- Student table -->
+        <table id="studentTable" border="1" cellpadding="8" cellspacing="0" style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Class</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamically add student rows here -->
+            </tbody>
+        </table>
             </div>
             <!-- Form Create Student -->
             <div>

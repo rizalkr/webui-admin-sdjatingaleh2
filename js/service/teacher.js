@@ -9,17 +9,22 @@ async function loadTeachers() {
 
 function renderTeachers(teachers) {
     // Gunakan elemen container khusus untuk daftar teacher
-    const teacherList = document.getElementById('teacherList');
-    if (!teacherList) return;
-    teacherList.innerHTML = "";
+    const tbody = document.querySelector('#teacherTable tbody');
+    if (!tbody) return;
+    tbody.innerHTML = "";
     teachers.forEach(teacher => {
-        const div = document.createElement('div');
-        div.innerHTML = `
-            <p>Nama : ${teacher.name} | Email : (${teacher.email}) | Mengajar : ${teacher.subject}</p>
-            <button onclick="showUpdateTeacherForm(${teacher.id}, '${teacher.name}', '${teacher.username}', '${teacher.email}', '${teacher.subject}')">Edit</button>
-            <button onclick="deleteTeacher(${teacher.id})">Delete</button>
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${teacher.name}</td>
+            <td>${teacher.username}</td>
+            <td>${teacher.email}</td>
+            <td>${teacher.subject}</td>
+            <td class="actions">
+                <button class="edit-btn" onclick="showUpdateTeacherForm(${teacher.id}, '${teacher.name}', '${teacher.username}', '${teacher.email}', '${teacher.subject}')">Edit</button>
+                <button class="delete-btn" onclick="deleteTeacher(${teacher.id})">Delete</button>
+            </td>
         `;
-        teacherList.appendChild(div);
+        tbody.appendChild(tr);
     });
 }
 

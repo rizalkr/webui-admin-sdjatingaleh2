@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,38 +8,43 @@
 </head>
 <body>
     <div class="login-container">
-        <h2>Login Admin</h2>
+        <img src="./images/logo.png" alt="logo" class="logo" />
+        <h1>Dashboard Admin</h1>
         <form id="loginForm">
-            <div>
+            <div class="input-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required />
             </div>
-            <div>
+            <div class="input-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required />
             </div>
             <button type="submit">Login</button>
         </form>
-        <div id="errorMessage" style="color:red;"></div>
+        <div id="errorMessage" class="error-message"></div>
     </div>
 
     <script src="../js/auth.js"></script>
     <script>
-        const loginForm = document.getElementById('loginForm');
-        loginForm.addEventListener('submit', (event) => {
+        document.getElementById('loginForm').addEventListener('submit', async (event) => {
             event.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            auth.loginUser(username, password)
-                .then(token => {
-                    // Jika login berhasil, arahkan ke dashboard
-                    window.location.href = "dashboard.html";
-                })
-                .catch(error => {
-                    console.error("Login error:", error);
-                    document.getElementById('errorMessage').textContent = "Login gagal: periksa kredensial Anda.";
-                });
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Validasi input sederhana sebelum mengirim permintaan login
+            if (!username || !password) {
+                errorMessage.textContent = "Username dan Password wajib diisi!";
+                return;
+            }
+
+            try {
+                const token = await auth.loginUser(username, password);
+                window.location.href = "dashboard.html"; // Redirect ke dashboard jika sukses
+            } catch (error) {
+                console.error("Login error:", error);
+                errorMessage.textContent = "Login gagal: periksa kredensial Anda.";
+            }
         });
     </script>
 </body>

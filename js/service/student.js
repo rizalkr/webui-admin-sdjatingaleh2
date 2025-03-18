@@ -8,17 +8,21 @@ async function loadStudents() {
 }
 
 function renderStudents(students) {
-    const studentList = document.getElementById('studentList');
-    if (!studentList) return;
-    studentList.innerHTML = "";
+    const tbody = document.querySelector('#studentTable tbody');
+    if (!tbody) return;
+    tbody.innerHTML = "";
     students.forEach(student => {
-        const div = document.createElement('div');
-        div.innerHTML = `
-            <p>${student.name} - Age: ${student.age}, Class: ${student.class}</p>
-            <button onclick="showUpdateStudentForm(${student.id}, '${student.name}', ${student.age}, '${student.class}')">Edit</button>
-            <button onclick="deleteStudent(${student.id})">Delete</button>
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${student.name}</td>
+            <td>${student.age}</td>
+            <td>${student.class}</td>
+            <td class="actions">
+                <button class="btn-edit" onclick="showUpdateStudentForm(${student.id}, '${student.name}', ${student.age}, '${student.class}')">Edit</button>
+                <button class="delete-btn" onclick="deleteStudent(${student.id})">Delete</button>
+            </td>
         `;
-        studentList.appendChild(div);
+        tbody.appendChild(tr);
     });
 }
 

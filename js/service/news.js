@@ -8,18 +8,22 @@ async function loadNews() {
 }
 
 function renderNews(newsList) {
-    const newsSection = document.getElementById('newsList');
-    if (!newsSection) return;
-    newsSection.innerHTML = "";
+    const tbody = document.querySelector('#newsTable tbody');
+    if (!tbody) return;
+    tbody.innerHTML = "";
     newsList.forEach(newsItem => {
-        const div = document.createElement('div');
-        div.innerHTML = `
-            <h4>${newsItem.title}</h4>
-            <p>${newsItem.content}</p>
-            <button onclick="showUpdateNewsForm(${newsItem.id}, '${newsItem.title}', '${newsItem.content}')">Edit</button>
-            <button onclick="deleteNews(${newsItem.id})">Delete</button>
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${newsItem.title}</td>
+            <td>${newsItem.author}</td>
+            <td><img src="${newsItem.image}" alt="${newsItem.title}" style="width:50px;"/></td>
+            <td>${newsItem.content}</td>
+            <td class="actions">
+                <button class="edit-btn" onclick="showUpdateNewsForm(${newsItem.id}, '${newsItem.title}', '${newsItem.content}')">Edit</button>
+                <button class="delete-btn" onclick="deleteNews(${newsItem.id})">Delete</button>
+            </td>
         `;
-        newsSection.appendChild(div);
+        tbody.appendChild(tr);
     });
 }
 

@@ -8,6 +8,18 @@ body {
     background-color: #f4f4f4;
 }
 
+#createTeacherBtn{
+    margin-top: 10px;
+}
+
+#createStudentBtn{
+    margin-top: 10px;
+}
+
+#createNewsBtn{
+    margin-top: 10px;
+}
+
 header, nav, main {
     width: 100%;
     max-width: 900px; /* Sesuaikan jika perlu */

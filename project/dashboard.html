@@ -99,17 +99,31 @@
         <section id="newsSection" class="content-section">
             <h2>News</h2>
             <div id="newsList">
-                <!-- Data news akan di-render di sini -->
+                <table id="newsTable" border="1" cellspacing="0" cellpadding="8" style="width:100%; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Image</th>
+                            <th>Content</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- News rows will be rendered here dynamically -->
+                    </tbody>
+                </table>
             </div>
             <!-- Form Create News -->
             <div>
                 <h3>Create News</h3>
                 <input type="text" id="createNewsTitle" placeholder="Title" />
+                <input type="text" id="createNewsAuthor" placeholder="Author" />
+                <input type="text" id="createNewsImage" placeholder="Link Image" />
                 <textarea id="createNewsContent" placeholder="Content"></textarea>
                 <button id="createNewsBtn">Create News</button>
             </div>
         </section>
-        
         <!-- Modal Update Teacher -->
         <div id="updateTeacherModal" class="modal">
             <div class="modal-content">
